@@ -17,6 +17,7 @@ docs/
 .serverless
 .webpack
 .build
+.next
 *_book
 
 # dot files

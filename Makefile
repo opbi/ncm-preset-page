@@ -16,11 +16,13 @@ nvm-update:
 	@bash -l -c 'nvm install --latest-npm --reinstall-packages-from=$(shell node -v)'
 
 cleanup:
-	@rm -rf node_modules coverage dist types docs  *.log
+	@rm -rf node_modules coverage .next types docs  *.log
+
+dev:
+	@next dev
 
 build:
-	@rm -rf dist
-	@babel src -d dist --ignore '**/__tests__/*.js'
+	@next build
 
 build-watch:
 	@babel src -d dist --ignore '**/__tests__/*.js' --watch
@@ -29,10 +31,10 @@ type-check:
 	@tsc
 
 lint:
-	@eslint_d src
+	@eslint_d pages
 
 lint-fix:
-	@eslint_d src --fix
+	@eslint_d pages --fix
 
 lint-reset:
 	@eslint_d restart
