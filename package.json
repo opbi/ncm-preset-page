@@ -1,9 +1,5 @@
 {
   "name": "@opbi/ncm-preset-page",
-  "description": "the config preset for [page] used by ncm",
-  "keywords": "standard, preset, ncm, config, template",
-  "repository": "git@github.com:opbi/ncm-preset-page.git",
-  "author": "OPBI <engineering@opbi.org>",
   "dependencies": {
     "next": "^12.2.5",
     "react": "^18.2.0",
