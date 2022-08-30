@@ -1,0 +1,27 @@
+## created by @opbi/ncm
+---
+component:
+  type: package
+  name: ncm-preset-package
+  description: the config preset for [package] used by ncm
+  keywords: standard, preset, ncm, config, template
+  private: false
+package:
+  # can have a separate environment section
+  # and rename this to usage scope
+  environment: node
+  # this governs
+  # - .nvmrc(dev)
+  # - babel.config.js(build)
+  # - .scrutinizer.yml(ci: test)
+  # - circleci(ci: test, release)
+  # - Dockerfile(app usage)
+  # - package.json(dependencies, package usage)
+  env-version: lts/fermium
+  # this can be moved to owner section
+  npmScope: opbi
+owner:
+  type: organisation
+  github: opbi
+  name: OPBI
+  email: engineering@opbi.org
