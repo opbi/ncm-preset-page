@@ -3,10 +3,12 @@ import { useSession, getSession } from 'next-auth/react'
 
 import Layout from '../components/Layout'
 import Post from '../components/Post'
+
 import prisma from '../lib/prisma'
 
 export const getServerSideProps = async ({ req, res }) => {
   const session = await getSession({ req })
+
   if (!session) {
     res.statusCode = 403
     return { props: { drafts: [] } }

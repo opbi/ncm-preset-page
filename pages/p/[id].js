@@ -1,6 +1,6 @@
 import React from 'react'
-import ReactMarkdown from 'react-markdown'
 import Router from 'next/router'
+import ReactMarkdown from 'react-markdown'
 import { useSession } from 'next-auth/react'
 
 import Layout from '../../components/Layout'
@@ -26,7 +26,7 @@ export const getServerSideProps = async ({ params = { id: '' } }) => {
  *
  */
 async function publishPost(id) {
-  await fetch(`/api/publish/${id}`, {
+  await fetch(`/api/post/${id}/publish`, {
     method: 'PUT',
   })
   await Router.push('/')
@@ -52,15 +52,12 @@ const Post = (props) => {
 
   const postBelongsToUser = session?.user?.email === props.author?.email
 
-  let { title } = props
-  if (!props.published) {
-    title = `${title} (Draft)`
-  }
-
   return (
     <Layout>
       <div>
-        <h2>{title}</h2>
+        <h2>
+          {props.title} {props.published || '(Draft)'}
+        </h2>
         <p>By {props?.author?.name || 'Unknown author'}</p>
         <ReactMarkdown>{props.content}</ReactMarkdown>
         {!props.published && userHasValidSession && postBelongsToUser && (
