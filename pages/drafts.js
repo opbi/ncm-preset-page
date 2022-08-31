@@ -1,18 +1,20 @@
 import React from 'react'
+import { useSession, getSession } from 'next-auth/react'
+
 import Layout from '../components/Layout'
 import Post from '../components/Post'
 import prisma from '../lib/prisma'
 
-export const getServerSideProps = async () => {
-  // const session = await getSession({ req })
-  // if (!session) {
-  //   res.statusCode = 403
-  //   return { props: { drafts: [] } }
-  // }
+export const getServerSideProps = async ({ req, res }) => {
+  const session = await getSession({ req })
+  if (!session) {
+    res.statusCode = 403
+    return { props: { drafts: [] } }
+  }
 
   const drafts = await prisma.post.findMany({
     where: {
-      author: { email: 'carl@prisma.io' },
+      author: { email: session.user.email },
       published: false,
     },
     include: {
@@ -27,16 +29,16 @@ export const getServerSideProps = async () => {
 }
 
 const Drafts = (props) => {
-  // const { data: session } = useSession()
+  const { data: session } = useSession()
 
-  // if (!session) {
-  //   return (
-  //     <Layout>
-  //       <h1>My Drafts</h1>
-  //       <div>You need to be authenticated to view this page.</div>
-  //     </Layout>
-  //   )
-  // }
+  if (!session) {
+    return (
+      <Layout>
+        <h1>My Drafts</h1>
+        <div>You need to be authenticated to view this page.</div>
+      </Layout>
+    )
+  }
 
   return (
     <Layout>

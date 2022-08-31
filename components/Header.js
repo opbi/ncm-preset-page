@@ -1,10 +1,13 @@
 import React from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { signOut, useSession } from 'next-auth/react'
 
 const Header = () => {
   const router = useRouter()
   const isActive = (pathname) => router.pathname === pathname
+
+  const { data: session, status } = useSession()
 
   const left = (
     <div className="left">
@@ -13,9 +16,11 @@ const Header = () => {
           Feed
         </a>
       </Link>
-      <Link href="/drafts">
-        <a data-active={isActive('/drafts')}>Drafts</a>
-      </Link>
+      {session && (
+        <Link href="/drafts">
+          <a data-active={isActive('/drafts')}>Drafts</a>
+        </Link>
+      )}
       <style jsx>{`
         .bold {
           font-weight: bold;
@@ -38,7 +43,62 @@ const Header = () => {
     </div>
   )
 
-  const right = null
+  const right = (
+    <div className="right">
+      {status === 'loading' && <p>Validating session ...</p>}
+      {!session && (
+        <Link href="/api/auth/signin">
+          <a data-active={isActive('/signup')}>Log in</a>
+        </Link>
+      )}
+      {session && (
+        <div>
+          <p>
+            {session.user.name} ({session.user.email})
+          </p>
+          <Link href="/create">
+            <button>
+              <a>New post</a>
+            </button>
+          </Link>
+          <button onClick={() => signOut()}>
+            <a>Log out</a>
+          </button>
+        </div>
+      )}
+      <style jsx>{`
+        a {
+          text-decoration: none;
+          color: var(--geist-foreground);
+          display: inline-block;
+        }
+
+        p {
+          display: inline-block;
+          font-size: 13px;
+          padding-right: 1rem;
+        }
+
+        a + a {
+          margin-left: 1rem;
+        }
+
+        .right {
+          margin-left: auto;
+        }
+
+        .right a {
+          border: 1px solid var(--geist-foreground);
+          padding: 0.5rem 1rem;
+          border-radius: 3px;
+        }
+
+        button {
+          border: none;
+        }
+      `}</style>
+    </div>
+  )
 
   return (
     <nav>
