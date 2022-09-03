@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { signOut, useSession } from 'next-auth/react'
 
-const Header = () => {
+const Header: React.FC = () => {
   const router = useRouter()
   const isActive = (pathname) => router.pathname === pathname
 

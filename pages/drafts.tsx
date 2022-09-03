@@ -1,12 +1,13 @@
 import React from 'react'
+import { GetServerSideProps } from 'next'
 import { useSession, getSession } from 'next-auth/react'
 
 import Layout from '../components/Layout'
-import Post from '../components/Post'
+import Post, { PostProps } from '../components/Post'
 
 import prisma from '../lib/prisma'
 
-export const getServerSideProps = async ({ req, res }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await getSession({ req })
 
   if (!session) {
@@ -30,7 +31,11 @@ export const getServerSideProps = async ({ req, res }) => {
   }
 }
 
-const Drafts = (props) => {
+type Props = {
+  drafts: PostProps[]
+}
+
+const Drafts: React.FC<Props> = (props) => {
   const { data: session } = useSession()
 
   if (!session) {

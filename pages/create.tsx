@@ -3,11 +3,11 @@ import Router from 'next/router'
 
 import Layout from '../components/Layout'
 
-const Draft = () => {
+const Draft: React.FC = () => {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
 
-  const submitData = async (e) => {
+  const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault()
     try {
       await fetch('/api/post', {

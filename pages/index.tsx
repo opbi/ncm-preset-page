@@ -1,11 +1,12 @@
 import React from 'react'
+import { GetStaticProps } from 'next'
 
 import Layout from '../components/Layout'
-import Post from '../components/Post'
+import Post, { PostProps } from '../components/Post'
 
 import prisma from '../lib/prisma'
 
-export const getStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
   const feed = await prisma.post.findMany({
     where: { published: true },
     include: {
@@ -21,7 +22,11 @@ export const getStaticProps = async () => {
   }
 }
 
-const Blog = (props) => {
+type Props = {
+  feed: PostProps[]
+}
+
+const Blog: React.FC<Props> = (props) => {
   return (
     <Layout>
       <div className="page">
