@@ -19,7 +19,7 @@
     "@commitlint/prompt-cli": "^17.1.2",
     "@next/eslint-plugin-next": "^12.2.5",
     "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
+    "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^12.1.10",
     "@types/react": "^18.0.18",
     "babel-jest": "^29.0.1",
